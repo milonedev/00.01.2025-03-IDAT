@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styles</title>
+</head>
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        text-align: center;
+    }
+
+    main {
+        /* display: grid; */
+        display: flex;
+        flex-direction: row;
+        border: 2px solid red;
+        /* grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 20px;
+        row-gap: 20px; */
+        /* justify-content: space-around;
+        padding: 20px; */
+    }
+
+    /* .homeSection{
+        grid-column: span 2;
+        grid-row: span 2;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    } */
+
+    section {
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 100%;
+    }
+
+    footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .homeSection:hover {
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        width: 200px !important;
+        height: 200px !important;
+        border-radius: 100%;
+        transition: all 0.5s ease-in-out;
+    }
+</style>
+
+<body>
+    <header>Encabezado</header>
+
+    <main>
+        <!-- secciones -->
+        <section class="homeSection">
+            <p>Home</p>
+        </section>
+
+        <section>
+            about section
+        </section>
+
+        <section>
+            proyects section
+        </section>
+    </main>
+    <main>
+
+        <section>
+            proyects section
+        </section>
+
+        <section>
+            proyects section
+        </section>
+
+        <section>
+
+            proyects section
+        </section>
+    </main>
+
+    <footer>
+        informacion adicional
+    </footer>
+</body>
+
+</html>
