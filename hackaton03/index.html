@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+
+    // TIPOS DE DATOS:
+
+    // Primitivos: es inmutable y pasa por un valor.
+
+    // 1.- undefined
+
+    let x;
+    console.log(x)
+
+    // 2.- nulls
+
+    let y = null;
+    console.log(y)
+
+    // 3.- booleans
+
+    let esActivo = true;
+    console.log(esActivo)
+
+    // 4.- Numbers
+
+    let age = 25;
+    let price = 12.22;
+
+    console.log(1 / 0)
+    console.log("asd" * 2)
+
+    // 5.- Bigint
+    let bigNumber = 1234567890123456789012345678901234567890n;
+    console.log(bigNumber)
+
+    // 6.- Strings
+    let name = "John Doe";
+    console.log(name)
+
+    // 7.- Symbols
+    let symbol = Symbol("identifier");
+    console.log(symbol)
+    
+    // No Primitivos: es mutable y pasa por un valor.
+
+    // 1.- Object
+    let person = {
+        name: "John",
+        age: 30,
+        isActive: true
+    };
+
+    console.log(person)
+    console.log(person.age)
+    console.log(person["age"])
+
+    // 2.- Arrays
+    let numbers = [1, 2, 3, 4, 5];
+    console.log(numbers)
+    console.log(numbers[0] *  2) // 1
+    numbers[0] = 10
+    console.log(numbers) // 3
+
+    let array = [
+    {
+        name: "Papa",
+        price: 12.2,
+        isActive: true
+    },
+    {
+        name: "Manzana ",
+        price: 25.2,
+        isActive: false
+    },
+    {
+        name: "Pera",
+        price: 15.2,
+        isActive: true
+    },
+    {
+        name: "Sandia",
+        price: 5.2,
+        isActive: false
+    }
+    ];
+
+    // Calcular el precio total de los productos con un for
+   
+    let suma = 0;
+    // for (let i = 0; i < array.length; i++) {
+    // if (array[i].isActive) {
+    //     suma += array[i].price;
+    // }}
+
+    console.log("total: ", suma);
+    // suma += array[i].price;
+    // console.log("total: ", suma);
+    // }
+
+    // Metodos
+    // 1.- forEach
+    array.forEach((item) => {
+        if (item.isActive) {
+            suma += item.price;
+        }
+    });
+
+    // console.log("total: ", suma);
+
+    // 2.- map 
+    let total = array.map((item) => {
+        if (item.isActive) {
+            return item.price;
+        }
+    });
+    console.log("total: ", total);
+
+    // FUNCIONES
+
+    // 1.- Declarativas
+    function sumar(a, b) {
+        return a + b;
+    }
+
+    console.log(sumar(2, 3));
+
+    // 2.- Expresivas
+    const restar = function (a, b) {
+        return a - b;
+    }
+    console.log(restar(2, 3));
+
+
+    // 3.- Anonimas
+    // (function (a, b) {
+    //     return alert(a + b);
+    // })(1,2)
+    
+    // 4.- Flecha
+    const multiplicar = (a, b) => {
+    //    ejectute algo no es necesario que coloque return
+        return a * b;
+    }
+
+    function multiplicarFun(a, b) {
+        return a * b;
+    }
+
+    console.log(multiplicarFun(2, 3));
+    console.log(multiplicar(2, 3));
+
+
+    function saludar(nombre, callback) {
+        console.log(`Hola ${nombre}`);
+        // callback(nombre);
+        return callback(nombre);
+    }
+
+    function despedir(nombre) {
+        return `Adios ${nombre}`;
+    }
+
+    console.log(saludar("Juan", despedir));
+
+</script>
+</html>
