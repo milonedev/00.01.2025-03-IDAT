@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Autorizacion</title>
+</head>
+
+<body class="grid place-items-center h-screen bg-gray-100">
+    <header class="absolute top-0 left-0 w-full">
+        <nav class="flex justify-between items-center bg-gray-800 p-4 text-white">
+            <a href="asignacion.html">Asignacion</a>
+            <a href="diagnostico.html">Diagnostico</a>
+            <a href="estados.html">Estados</a>
+            <a href="tecnico.html">Tecnico</a>
+        </nav>
+    </header>
+
+    <form id="asignacionForm" class="flex flex-col items-center bg-white p-6 rounded shadow-md gap-4 rounded-lg">
+
+        <select id="telefonos" required>
+            <option value=""> Seleccione el telefono a autorizar:</option>
+        </select>
+
+        <textarea id="firma" placeholder="Ingrese su autorizacion escrita:" class="py-2 border border-black rounded-lg pl-4">
+        </textarea>
+
+        <input type="text" id="abono" placeholder="Abono" required class="py-2 border border-black rounded-lg pl-4" />
+
+        <button type="submit"
+            class="bg-blue-400 text-white uppercase py-2 px-8 rounded-lg shadow-md hover:cursor-pointer hover:bg-white hover:text-blue-400 border border-blue-400 transition-colors duration-300 ease-in-out font-semibold">Guardar</button>
+    </form>
+</body>
+<script>
+    
+    function cargarTelefonos() {
+        const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+        const telefonoSelect = document.getElementById("telefonos");
+
+        console.log(telefonos);
+
+        telefonos.forEach((telefono, index) => {
+            const option = document.createElement("option");
+            option.value = telefono.id;
+            option.textContent = `${telefono.serie} - ${telefono.marca}`;
+            telefonoSelect.appendChild(option);
+        });
+    }
+
+    document.getElementById("asignacionForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const telefonoSelect = document.getElementById("telefonos");
+        const firma = document.getElementById("firma");
+        const abono = document.getElementById("abono");
+        const abonoValue = parseInt(abono.value);
+        
+        if (isNaN(abonoValue) || abonoValue <= 0) {
+            alert("Por favor, ingrese un abono valido.");
+            return;
+        }
+
+        if (abonoValue < 200) {
+            alert("El abono debe ser mayor a 200.");
+            return;
+        }
+
+        const telefonoId = telefonoSelect.value;
+        const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+
+        const findTelefono = telefonos.find((telefono, index) => {
+            if (telefono.id == telefonoId) {
+                telefono.autorizacion = true;
+                telefono.estado = "Autorizado";
+                telefono.reported = false;
+                telefono.abono = abonoValue;
+                return true;
+            }
+        });
+
+        if (findTelefono) {
+            localStorage.setItem("telefonos", JSON.stringify(telefonos));
+            alert("Autorizacion guardada correctamente.");
+            telefonoSelect.value = "";
+            firma.value = "";
+        } else {
+            alert("Por favor, seleccione un telefono.");
+        }
+
+    });    
+
+    cargarTelefonos();
+</script>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Tecnico</title>
+</head>
+
+<body class="grid place-items-center h-screen bg-gray-100">
+
+    <header class="absolute top-0 left-0 w-full">
+        <nav class="flex justify-between items-center bg-gray-800 p-4 text-white">
+            <a href="asignacion.html">Asignacion</a>
+            <a href="diagnostico.html">Diagnostico</a>
+            <a href="estados.html">Estados</a>
+            <a href="tecnico.html">Tecnico</a>
+        </nav>
+    </header>
+
+    <form id="tecnicoForm" class="flex flex-col items-center bg-white px-6 rounded shadow-md gap-6 rounded-lg min-w-[400px] py-10">
+        <h2 class="text-2xl uppercase font-bold ">Asignacion de estado al movil.</h2>
+        <select id="telefonoSelect">
+            <option value="">Seleccione un telefono:</option>
+        </select>
+
+        <select id="repuestosList">
+            <option value="">Seleccione una opcion</option>
+            <option value="pantalla">Pantalla nueva.</option>
+            <option value="audioFlex">Flex de Audio nuevo.</option>
+            <option value="bontones">Botones.</option>
+        </select>
+        <select id="estadoSelect">
+            <option value="Reparacion">Reparacion</option>
+            <option value="Entregado">Entregado</option>
+        </select>
+
+        <button type="submit"
+            class="bg-blue-400 text-white uppercase py-2 px-8 rounded-lg shadow-md hover:cursor-pointer hover:bg-white hover:text-blue-400 border border-blue-400 transition-colors duration-300 ease-in-out font-semibold">Guardar</button>
+
+    </form>
+</body>
+<script>
+    function cargarTelefonos() {
+        const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+        const telefonoSelect = document.getElementById("telefonoSelect");
+
+        telefonos.forEach((telefono, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = `${telefono.serie} - ${telefono.marca}`;
+            telefonoSelect.appendChild(option);
+        });
+    }
+
+    document.getElementById("tecnicoForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const telefonoSelect = document.getElementById("telefonoSelect");
+        const estadoSelect = document.getElementById("estadoSelect");
+
+        const selectedIndex = telefonoSelect.value;
+        const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+
+        if (selectedIndex !== "") {
+            telefonos[selectedIndex].estado = estadoSelect.value;
+            telefonos[selectedIndex].repuestos.push(document.getElementById("repuestosList").value);
+            localStorage.setItem("telefonos", JSON.stringify(telefonos));
+            alert("Estado guardado correctamente.");
+            estadoSelect.value = "Reparacion";
+        } else {
+            alert("Por favor, seleccione un telefono.");
+        }
+    });
+
+    cargarTelefonos();
+</script>
+
+</html>

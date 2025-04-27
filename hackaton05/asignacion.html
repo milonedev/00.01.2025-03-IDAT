@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Asignacion</title>
+</head>
+
+<body class="grid place-items-center h-screen bg-gray-100">
+    <header class="absolute top-0 left-0 w-full">
+        <nav class="flex justify-between items-center bg-gray-800 p-4 text-white">
+            <a href="asignacion.html">Asignacion</a>
+            <a href="diagnostico.html">Diagnostico</a>
+            <a href="estados.html">Estados</a>
+            <a href="tecnico.html">Tecnico</a>
+        </nav>
+    </header>
+
+    <form id="asignacionForm" class="flex flex-col items-center bg-white p-6 rounded shadow-md gap-4 rounded-lg">
+        <h2 class="text-2xl uppercase font-bold ">Creacion de Movil para reparacion:</h2>
+        <input type="text" id="serie" placeholder="Serie" required class="py-2 border border-black rounded-lg pl-4" />
+        <input type="text" id="imei" placeholder="IMEI" required class="py-2 border border-black rounded-lg pl-4" />
+        <input type="text" id="marca" placeholder="Marca" required class="py-2 border border-black rounded-lg pl-4" />
+        <!-- <input type="text" id="tecnico" placeholder="Tecnico" required
+            class="py-2 border border-black rounded-lg pl-4" /> -->
+
+        <select id="sucursal" required>
+            <option value="Centro">Sucurasal Centro</option>
+            <option value="Centro">Sucurasal Norte</option>
+            <option value="Centro">Sucurasal Sur</option>
+        </select>
+
+        <button type="submit"
+            class="bg-blue-400 text-white uppercase py-2 px-8 rounded-lg shadow-md hover:cursor-pointer hover:bg-white hover:text-blue-400 border border-blue-400 transition-colors duration-300 ease-in-out font-semibold">Guardar</button>
+    </form>
+</body>
+<script>
+    const blackList = [{serie: "123456789012345", imei: "123456789012345"}, {serie: "987654321098765", imei: "987654321098765"}, {serie: "111111111111111", imei: "111111111111111"}];
+
+    class Telefono {
+        constructor(serie, marca, imei, sucursal) {
+            this.id = Date.now();
+            this.serie = serie;
+            this.marca = marca;
+            this.imei = imei;
+            this.sucursal = sucursal;
+            this.tecnico = "";
+            this.diagnostico = "";
+            this.estado = "Recepcion";
+            this.reported = false;
+            this.autorizacion = false;
+            this.repuestos = [];
+            this.abono = 0;
+        }
+        
+        verifyReport() {
+            const report = blackList.find(item => item.serie === this.serie || item.imei === this.imei);
+            if (report) {
+                this.reported = true;
+                // alert("El telefono ya fue reportado como robado.");
+                return true;
+            }
+
+            return false;
+        }
+
+    }
+
+    function guardarTelefono(telefono) {
+        try {
+            // obtenedor el objeto de localStorage
+            const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+
+            // agregamos el nuevo teledono al array
+            telefonos.push(telefono);
+
+            // guardamos el teledono en el localStorage
+            localStorage.setItem("telefonos", JSON.stringify(telefonos));
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    document.getElementById("asignacionForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const serie = document.getElementById("serie").value;
+        const marca = document.getElementById("marca").value;
+        const imei = document.getElementById("imei").value;
+        const sucursal = document.getElementById("sucursal").value;
+
+        const telefono = new Telefono(serie, marca, imei, sucursal);
+
+        telefono.verifyReport();
+
+        if (telefono.reported) {
+            alert("El telefono ya fue reportado como robado.");
+            return;
+        }
+        const saved = guardarTelefono(telefono);
+
+        if (saved) {
+            alert("Telefono guardado correctamente.");
+        } else {
+            alert("Error al guardar el telefono.");
+        }
+        // Guardar el telefono en el localStorage
+    });
+
+
+</script>
+
+</html>

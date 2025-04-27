@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>diagnostico</title>
+</head>
+
+<body class="grid place-items-center h-screen bg-gray-100">
+
+    <header class="absolute top-0 left-0 w-full">
+        <nav class="flex justify-between items-center bg-gray-800 p-4 text-white">
+            <a href="asignacion.html">Asignacion</a>
+            <a href="diagnostico.html">Diagnostico</a>
+            <a href="estados.html">Estados</a>
+            <a href="tecnico.html">Tecnico</a>
+        </nav>
+    </header>
+
+    <form id="diagnosticoForm"
+        class="flex flex-col items-center bg-white px-6 rounded shadow-md gap-4 rounded-lg min-w-[400px] py-10">
+        <h2 class="text-2xl uppercase font-bold ">Primer Diagnostico al movil.</h2>
+        <select id="telefonoSelect">
+            <option value="">Seleccione un telefono:</option>
+        </select>
+
+        <select id="tecnicoSelect">
+            <option value="">Seleccione un tecnico:</option>
+        </select>
+
+        <textarea class="py-2 border border-black rounded-lg pl-4 min-h-[360px]" id="diagnostico" required
+            placeholder="Ingrese el primer diagnostico:"></textarea>
+
+        <button type="submit"
+            class="bg-blue-400 text-white uppercase py-2 px-8 rounded-lg shadow-md hover:cursor-pointer hover:bg-white hover:text-blue-400 border border-blue-400 transition-colors duration-300 ease-in-out font-semibold">Guardar</button>
+    </form>
+</body>
+
+<script>
+    const selectTelefono = document.getElementById("telefonoSelect");
+
+    function cargarTelefonos() {
+        const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+        const telefonoSelect = document.getElementById("telefonoSelect");
+
+        telefonos.forEach((telefono, index) => {
+            const option = document.createElement("option");
+            option.value = telefono.id;
+            option.dataset.marca = telefono.marca;
+            option.textContent = `${telefono.serie} - ${telefono.marca}`;
+            telefonoSelect.appendChild(option);
+        });
+    }
+
+    function cargarTecnicos(marca) {
+        const tecnicos = JSON.parse(localStorage.getItem("tecnicos")) || [];
+        const tecnicoSelect = document.getElementById("tecnicoSelect");
+
+        tecnicoSelect.innerHTML = '<option value="">Seleccione un tecnico:</option>'; // Limpiar opciones anteriores
+        tecnicos.forEach((tecnico, index) => {
+            if (tecnico.skills.includes(marca)) {
+                const option = document.createElement("option");
+                option.value = tecnico.id;
+                option.textContent = `${tecnico.nombre} ${tecnico.apellido}`;
+                tecnicoSelect.appendChild(option);
+            }
+        });
+    }
+
+    selectTelefono.addEventListener("change", function (event) {
+        const selectOption = event.target.selectedOptions[0];
+        const marca = selectOption.dataset.marca;
+        
+        cargarTecnicos(marca);
+    });
+
+
+    document.getElementById("diagnosticoForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const telefonoSelect = document.getElementById("telefonoSelect");
+        const diagnosticoInput = document.getElementById("diagnostico");
+        const tecnicoSelect = document.getElementById("tecnicoSelect");
+        
+        const selectedIndex = telefonoSelect.value;
+
+        const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+
+        const findedTelefono = telefonos.find(telefono => telefono.id == selectedIndex);
+
+        if (findedTelefono) {
+            findedTelefono.diagnostico = diagnosticoInput.value;
+            findedTelefono.tecnico = tecnicoSelect.value;
+            
+            telefonos.push(findedTelefono);
+            telefonos.splice(telefonos.indexOf(findedTelefono), 1);
+            localStorage.setItem("telefonos", JSON.stringify(telefonos));
+    
+            alert("Diagnostico guardado correctamente.");
+            diagnosticoInput.value = "";
+
+        } else {
+            alert("No se encontro el telefono.");
+        }
+    });
+
+    cargarTelefonos();
+</script>
+
+</html>
