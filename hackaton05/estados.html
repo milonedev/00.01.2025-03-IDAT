@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Estados</title>
 </head>
+
 <body class="grid place-items-center h-screen bg-gray-100">
-    
+
     <header class="absolute top-0 left-0 w-full">
         <nav class="flex justify-between items-center bg-gray-800 p-4 text-white">
             <a href="asignacion.html">Asignacion</a>
@@ -17,29 +19,38 @@
         </nav>
     </header>
 
-    <div id="estadoContainer"></div>
-</body>
-<script>
-    function cargarTelefonos() {
-        const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
-        const estadoContainer = document.getElementById("estadoContainer");
+    <body>
+        <div id="estadoContainer"></div>
 
-        telefonos.forEach((telefono, index) => {
-            const estadoDiv = document.createElement("div");
-            estadoDiv.className = "bg-white p-4 rounded shadow-md mb-4";
-            estadoDiv.innerHTML = `
-                <h3 class="text-lg font-bold">Telefono ${index + 1}</h3>
-                <p><strong>Serie:</strong> ${telefono.serie}</p>
-                <p><strong>Marca:</strong> ${telefono.marca}</p>
-                <p><strong>IMEI:</strong> ${telefono.imei}</p>
-                <p><strong>Sucursal:</strong> ${telefono.sucursal}</p>
-                <p><strong>Tecnico:</strong> ${telefono.tecnico}</p>
-                <p><strong>Estado:</strong> ${telefono.estado}</p>
+    </body>
+    <script>
+        function cargarTelefonos() {
+            const telefonos = JSON.parse(localStorage.getItem("telefonos")) || [];
+            const estadoContainer = document.getElementById("estadoContainer");
+
+            telefonos.forEach((telefono, index) => {
+                const estadoDiv = document.createElement("div");
+                estadoDiv.className = "p-4 rounded mb-4";
+                estadoDiv.innerHTML = `
+                <div class=" px-8 w-auto h-auto min-w-[320px] py-12 rounded-lg grid grid-cols-2 gap-4 bg-white shadow-md">
+                    <img alt="" class="w-auto h-full" src="${telefono.imgPath}"/>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold">Telefono ${index + 1}</h3>
+                        <p><strong>Serie:</strong> ${telefono.serie}</p>
+                        <p><strong>Marca:</strong> ${telefono.marca}</p>
+                        <p><strong>IMEI:</strong> ${telefono.imei}</p>
+                        <p><strong>Sucursal:</strong> ${telefono.sucursal}</p>
+                        <p><strong>Tecnico:</strong> ${telefono.tecnico}</p>
+                        <p><strong>Estado:</strong> ${telefono.estado}</p>
+                    </div>
+                </div>
             `;
-            estadoContainer.appendChild(estadoDiv);
-        });
-    }
+                estadoContainer.appendChild(estadoDiv);
+            });
+        }
 
-    cargarTelefonos();
-</script>
+        cargarTelefonos();
+    </script>
+
 </html>

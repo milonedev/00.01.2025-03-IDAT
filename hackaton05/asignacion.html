@@ -23,6 +23,7 @@
         <input type="text" id="serie" placeholder="Serie" required class="py-2 border border-black rounded-lg pl-4" />
         <input type="text" id="imei" placeholder="IMEI" required class="py-2 border border-black rounded-lg pl-4" />
         <input type="text" id="marca" placeholder="Marca" required class="py-2 border border-black rounded-lg pl-4" />
+        <input type="text" id="img" placeholder="Image" required class="py-2 border border-black rounded-lg pl-4" />
         <!-- <input type="text" id="tecnico" placeholder="Tecnico" required
             class="py-2 border border-black rounded-lg pl-4" /> -->
 
@@ -40,12 +41,13 @@
     const blackList = [{serie: "123456789012345", imei: "123456789012345"}, {serie: "987654321098765", imei: "987654321098765"}, {serie: "111111111111111", imei: "111111111111111"}];
 
     class Telefono {
-        constructor(serie, marca, imei, sucursal) {
+        constructor(serie, marca, imei, sucursal, img) {
             this.id = Date.now();
             this.serie = serie;
             this.marca = marca;
             this.imei = imei;
             this.sucursal = sucursal;
+            this.imgPath = img;
             this.tecnico = "";
             this.diagnostico = "";
             this.estado = "Recepcion";
@@ -91,8 +93,9 @@
         const marca = document.getElementById("marca").value;
         const imei = document.getElementById("imei").value;
         const sucursal = document.getElementById("sucursal").value;
+        const img = document.getElementById("img").value;
 
-        const telefono = new Telefono(serie, marca, imei, sucursal);
+        const telefono = new Telefono(serie, marca, imei, sucursal, img);
 
         telefono.verifyReport();
 
