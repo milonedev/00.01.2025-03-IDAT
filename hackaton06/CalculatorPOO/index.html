@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Calculadora POO</title>
+    <style>
+        .btn {
+            background-color: #dadcde;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #d7e2ee;
+            cursor: pointer;
+        }
+        
+        .btnAction {
+            color: white;
+            background-color:  #5a67d8;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease-in-out;
+
+        }
+
+        .btnAction:hover {
+            background-color: rgb(161, 198, 235);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-black grid place-content-center h-screen w-full">
+    <div class="bg-white rounded-lg shadow-lg p-8 w-96 shadow-white shadow-2xl">
+        <h1 class="text-3xl font-bold text-center text-indigo-600 uppercase">
+            Calculadora POO
+        </h1>
+
+        <input type="text" id="display" class="w-full h-12 text-right text-2xl border border-gray-300 rounded mt-4 mb-4 px-6" disabled placeholder="0">
+
+        <div class="grid grid-cols-4 gap-4">
+            <button class="btn">7</button>
+            <button class="btn">8</button>
+            <button class="btn">9</button>
+            <button class="btnAction btn op">/</button>
+
+            <button class="btn">4</button>
+            <button class="btn">5</button>
+            <button class="btn">6</button>
+            <button class="btnAction btn op">*</button>
+
+            <button class="btn">1</button>
+            <button class="btn">2</button>
+            <button class="btn">3</button>
+            <button class="btnAction btn op">-</button>
+
+            <button class="btnAction" id="clear">C</button>
+            <button class="btn">0</button>
+            <button class="btnAction btn equals">=</button>
+            <button class="btnAction btn op">+</button>
+        </div>
+
+        <div class="mt-4">
+            <p class="btnAction w-full text-center uppercase font-semibold" id="calculate">Historial</p>
+
+            <ul id="history" class="mt-2 bg-gray-100 p-4 rounded-lg max-h-40 overflow-y-auto">
+                <!-- Historial de cálculos se mostrará aquí -->
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="module" src="./js/main.js" ></script>
+</html>
