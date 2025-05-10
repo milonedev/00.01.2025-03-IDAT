@@ -1,0 +1,21 @@
+# Ignorar todos los node_modules
+**/node_modules/
+
+# Archivos del entorno
+.env
+.env.local
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.pnp.*
