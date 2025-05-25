@@ -7,6 +7,8 @@ require('dotenv').config()
 app.use(express.json())
 
 // Rputes
+app.use('/api/products', require('./routes/product.js'))
+
 
 // https://image.tmdb.org/t/p/w500/zboCGZ4aIqPMd7VFI4HWnmc7KYJ.jpg
 app.listen(port, () => {
