@@ -124,8 +124,51 @@ select b.*, eb.* from becas_asignadas ba
 		
 		
 -- 3
-		
-		
+
+create table libro (
+	cod_libro SERIAL primary key,
+	titulo text not null,
+	autor text not null,
+	editorial text not null
+)
+
+create table lector (
+	id_lector SERIAL primary key,
+	nombre text not null
+)
+
+create table prestamo_libro(
+	cod_libro int references libro(cod_libro),
+	id_lector int references lector(id_lector),
+	fecha_dev date,
+	primary key (cod_libro, id_lector, fecha_dev)
+)
+
+insert into libro (titulo, autor, editorial) values
+('Variable compleja', 'Murray Spiegel', 'McGraw Hill'),
+('Visual Basic 5', 'E. Petroustoss', 'Anaya'),
+('Estadística', 'Murray Spiegel', 'McGraw Hill'),
+('Oracle University', 'Nancy Greenberg y Priya Nathan', 'Oracle Corp.'),
+('Clipper 5.01', 'Ramalho', 'McGraw Hill');
+
+insert into lector (nombre) values
+('Pérez Gómez, Juan'),
+('Ríos Terán, Ana'),
+('Roca, René'),
+('García Roque, Luis');
+
+INSERT INTO prestamo_libro VALUES
+(1, 1, '2005-04-15'),
+(2, 2, '2005-04-17'),
+(3, 3, '2005-04-16'),
+(4, 4, '2005-04-20'),
+(5, 1, '2005-04-18');
+
+select l.*, li.*, pl.fecha_dev from prestamo_libro pl
+inner join lector l on pl.id_lector = l.id_lector
+inner join libro li on pl.cod_libro = li.cod_libro
+
+
 -- 4 
 	create table cliente (
 		id_cliente SERIAL primary key,
@@ -223,4 +266,8 @@ select * from vehiculo v
 	inner join clienteVehiculo c on v.dni_cliente = c.dni
 	inner join modelo m on v.id_modelo = m.id_modelo
 	order by c.nombre, v.matricula
+	
+	
+	
+	
 	
