@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    input {
+        padding-bottom: 2px;
+        padding-top: 2px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border: 1px solid #ccc;
+        border-radius: 0.375rem;
+        width: 100%;
+    }
+</style>
+
+<body class="bg-gray-100 text-gray-800 font-sans grid place-content-center h-auto">
+    <h1 class="text-4xl font-bold underline uppercase text-center mt-10 w-full">
+        Create My List
+    </h1>
+
+    <div class="flex flex-col">
+        <form action="http://localhost:3000/list/" method="POST" class="grid place-content-center gap-6 mt-10">
+
+            <input type="text" name="nombre" placeholder="Nombre" class="w-full py-2 px-6">
+            <input type="text" name="unidadMedida" placeholder="Medida" class="w-full py-2 px-6">
+            <input type="text" name="cantidad" placeholder="Cantidad" class="w-full py-2 px-6">
+
+            <button type="submit"
+                class="bg-blue-400 py-2 text-white uppercase hover:bg-blue-700 transition-colors duration-300 ease-in-out">Enviar</button>
+        </form>
+
+    </div>
+</body>
+<script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('http://localhost:3000/list/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const jsonData = await response.json();
+            console.log(jsonData);
+            alert('Item created successfully!');
+            form.reset(); // Reset the form after successful submission
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to create item.');
+        }
+    });
+</script>
+
+</html>

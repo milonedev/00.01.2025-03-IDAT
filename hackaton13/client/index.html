@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans grid place-content-center h-auto">
+    <h1 class="text-4xl font-bold underline uppercase text-center mt-10 w-full">
+        My List
+    </h1>
+
+    <div id="container" class="flex flex-col gap-6 mt-10"></div>
+
+    <script>
+        const container = document.getElementById('container');
+        const buttons = document.querySelectorAll('button');
+
+        const getData = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/list/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const jsonData = await response.json();
+
+                jsonData.data?.forEach(item => {
+                    const listContainer = document.createElement('div');
+                    listContainer.className = "bg-white rounded-sm shadow-md flex flex-col items-center py-4 px-12";
+
+                    listContainer.innerHTML = `
+                        <div class="flex flex-row justify-center items-center gap-5">
+                            <img src="${item.imagen}" alt="List Image" class="w-32 h-32 object-cover rounded shadow-lg">
+                            <div class="w-[140px] flex flex-col items-start">
+                                <h2 class="text-2xl font-semibold">${item.nombre}</h2>
+                                <p class="text-gray-600">${item.cantidad}<span> ${item.unidadMedida}</span></p>
+                            </div>
+                            <p class="${item.estado === 'Completado' ? 'bg-red-300' : 'bg-green-300'} py-0.5 px-3 rounded-xl text-black">${item.estado}</p>
+                            <div class="flex flex-col">
+                                <button data-id="${item.nombre}" class="py-2 px-6 bg-blue-400 text-white rounded-md shadow hover:bg-blue-500 transition duration-300 hover:cursor-pointer">
+                                    Completado
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                    const button = listContainer.querySelector('button');
+                    button.addEventListener('click', async () => {
+                        const nombre = button.getAttribute('data-id');
+                        try {
+                            const response = await fetch(`http://localhost:3000/list/`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ nombre })
+                            });
+
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+
+                            window.location.reload(); // Recargar la página para reflejar el cambio
+                        } catch (error) {
+                            console.error('Error al actualizar el estado:', error);
+                        }
+                    });
+
+                    container.appendChild(listContainer);
+                });
+
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        }
+
+        getData();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+[
+  {
+    "nombre": "Manzanas",
+    "unidadMedida": "kg",
+    "cantidad": 50,
+    "estado": "Completado",
+    "fechaRegistro": "2025-06-20",
+    "fechaCumplimiento": "2025-06-21T23:38:51.992Z",
+    "precio": 0,
+    "imagen": "https://example.com/images/manzanas.png"
+  },
+  {
+    "nombre": "Manzanas Perita",
+    "unidadMedida": "kg",
+    "cantidad": 50,
+    "estado": "Pendiente",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBgWQ6YSWUs1seMwLYpFaN-3cX7cfuaDyKYA&s",
+    "fechaRegistro": "2025-06-21T23:37:41.001Z",
+    "fechaCumplimiento": "",
+    "precio": 0
+  }
+]
